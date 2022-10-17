@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block main %}
+<div class="container">
+	<div class="row">
+	  	<div class="col-md-5">
+	    	<table class="table">
+	        	<tr>
+					<th><center>Date</center></th>
+					<th><center>Time</center></th>
+					<th><center>Jail</center></th>
+					<th><center>IP Address</center></th>
+					<th><center>Country</center></th>
+				</tr>
+      			{% for line in lines %}
+					<tr>
+						<td>{{ line.split()[0] }}</td>
+						<td>{{ line.split()[1].split(",")[0] }}</td>
+						<td>{{ line.split()[5] }}</td>
+						<td>{{ line.split()[7] }}</td>
+						{% if getcountry(line.split(" ")[7].rstrip('\n'))['status'] == "success" %}
+							<td>{{ getcountry(line.split(" ")[7].rstrip('\n'))['country'] }}</td>
+						{% else %}
+							<td>Unknown</td>
+						{% endif %}
+					</tr>
+				{% endfor %}
+			</table>
+      	</div>
+	</div>
+</div>
+{% endblock %}
